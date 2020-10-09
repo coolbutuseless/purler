@@ -10,7 +10,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![R build
-status](https://github.com/coolbutuseless/purler/workflows/R-CMD-check/badge.svg)](https://github.com/coolbutuseless/purler-dev/actions)
+status](https://github.com/coolbutuseless/purler/workflows/R-CMD-check/badge.svg)](https://github.com/coolbutuseless/purler/actions)
 <!-- badges: end -->
 
 `purler` contains tools for run-length encoding vector data.
