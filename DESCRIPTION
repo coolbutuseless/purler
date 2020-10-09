@@ -1,7 +1,7 @@
 Package: purler
 Type: Package
 Title: Run-Length Encoding Tools
-Version: 0.1
+Version: 0.1.1
 Author: mikefc
 Maintainer: mikefc <mikefc@coolbutuseless.com>
 Description: Run-length encoding tools where NA values are treated as identical, 

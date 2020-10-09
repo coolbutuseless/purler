@@ -18,7 +18,10 @@ status](https://github.com/coolbutuseless/purler/workflows/R-CMD-check/badge.svg
 #### Key features:
 
   - `NA` values are considered identical (unlike `base::rle()`)
-  - Faster calculation with results returned as a `data.frame`
+  - Results returned as a `data.frame` (rather than a list), but still
+    compatible with `base::inverse.rle()`
+  - Faster\! Includes a C implementation for regular atomic vectors, and
+    an R version compatible with every input `base::rle()` accepts.
 
 ## What’s in the box
 
@@ -27,14 +30,10 @@ status](https://github.com/coolbutuseless/purler/workflows/R-CMD-check/badge.svg
       - Groups `NA` values into a run (unlike `base::rle()`)
       - Returns a **data.frame** rather than a list
       - Returned object is compatible with `base::inverse.rle()`
-      - Can be **10x** faster than `base::rle()`
-  - `rle2()` is more compatible with `base::rle()` for values that
-    `rlenc()` does not handle.
-      - Written in vanilla R, so speed is about the same as
-        `base::rle()`
-      - Groups `NA` values into a run (unlike `base::rle()`)
-      - Same type of return object as `base::rle()`
-      - Will work with anything that `base::rle()` works with
+      - Can be **10x faster** than `base::rle()`
+  - `rlenc_compat()`
+      - A pure R version of `rlenc()` which is compatible with all
+        inputs that `base::rle()` accepts
   - `rleid()` returns an integer vector numbering the runs of identical
     values within a vector of numeric or character data. This is very
     similar to `data.table::rleid()`, execpt the `data.table()` version
@@ -54,9 +53,9 @@ remotes::install_github('coolbutuseless/purler')
 
 ## ToDo
 
-  - Long vector support
+  - Long vector support in `rlenc()`
 
-# `rlenc()` - run-length encoding output as a data.frame
+## `rlenc()` - run-length encoding output as a data.frame
 
 ``` r
 input <- c(1, 1, 1, 2, 2, 8, 8, 8, 8, 8, NA, NA, NA, NA)
@@ -64,11 +63,11 @@ input <- c(1, 1, 1, 2, 2, 8, 8, 8, 8, 8, NA, NA, NA, NA)
 (result <- purler::rlenc(input))
 ```
 
-    #>   start values lengths
-    #> 1     1      1       3
-    #> 2     4      2       2
-    #> 3     6      8       5
-    #> 4    11     NA       4
+    #>   lengths values start
+    #> 1       3      1     1
+    #> 2       2      2     4
+    #> 3       5      8     6
+    #> 4       4     NA    11
 
 ``` r
 inverse.rle(result)
@@ -76,7 +75,7 @@ inverse.rle(result)
 
     #>  [1]  1  1  1  2  2  8  8  8  8  8 NA NA NA NA
 
-# `rlenc()` benchmark
+## `rlenc()` benchmark
 
 ``` r
 library(tidyr)
@@ -92,15 +91,16 @@ zz <- sample(seq_len(M), N, replace = TRUE)
 res <- bench::mark(
   rle(zz),
   rlenc(zz),
+  rlenc_compat(zz),
   check = FALSE
 )
 
-plot(res)
+plot(res) + theme_bw()
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
-# Run-length encoding with NAs
+## Run-length encoding with NAs
 
 In `base::rle()`, runs of NA values are *not* treated as a group.
 
@@ -118,22 +118,24 @@ base::rle(input)
     #>   values : num [1:7] 1 2 NA NA NA NA 4
 
 ``` r
-purler::rle2(input)
+purler::rlenc_compat(input)
 ```
 
-    #> Run Length Encoding
-    #>   lengths: int [1:4] 2 1 4 3
-    #>   values : num [1:4] 1 2 NA 4
+    #>   lengths values start
+    #> 1       2      1     1
+    #> 2       1      2     3
+    #> 3       4     NA     4
+    #> 4       3      4     8
 
 ``` r
 purler::rlenc(input)
 ```
 
-    #>   start values lengths
-    #> 1     1      1       2
-    #> 2     3      2       1
-    #> 3     4     NA       4
-    #> 4     8      4       3
+    #>   lengths values start
+    #> 1       2      1     1
+    #> 2       1      2     3
+    #> 3       4     NA     4
+    #> 4       3      4     8
 
 ``` r
 purler::rlenc_id(input)
@@ -141,7 +143,7 @@ purler::rlenc_id(input)
 
     #>  [1] 1 1 2 3 3 3 3 4 4 4
 
-# Run-length encoded group ids
+## Run-length encoded group ids
 
 `rlenc_id()` numbers the runs of identical values in a numeric or
 character vector.

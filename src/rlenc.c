@@ -118,18 +118,18 @@ SEXP rlenc_(SEXP x) {
   // Return list/data.frame
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   SEXP df_ = PROTECT(allocVector(VECSXP, 3));
-  SET_VECTOR_ELT(df_, 0, start_);
+  SET_VECTOR_ELT(df_, 0, len_  );
   SET_VECTOR_ELT(df_, 1, value_);
-  SET_VECTOR_ELT(df_, 2, len_  );
+  SET_VECTOR_ELT(df_, 2, start_);
 
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // Set the names on the list.
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   SEXP names = PROTECT(allocVector(STRSXP, 3));
-  SET_STRING_ELT(names, 0, mkChar("start" ));
+  SET_STRING_ELT(names, 0, mkChar("lengths"));
   SET_STRING_ELT(names, 1, mkChar("values" ));
-  SET_STRING_ELT(names, 2, mkChar("lengths"));
+  SET_STRING_ELT(names, 2, mkChar("start" ));
   setAttrib(df_, R_NamesSymbol, names);
 
 

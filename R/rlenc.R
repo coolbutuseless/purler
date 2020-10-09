@@ -12,6 +12,21 @@
 #' @export
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 rlenc <- function(x) {
+
+  if (length(x) == 0L) {
+    return(
+      structure(
+        list(
+          start   = integer(0),
+          lengths = integer(0),
+          values = x
+        ),
+        class     = "data.frame",
+        row.names = integer(0))
+    )
+  }
+
+
   .Call(rlenc_, x)
 }
 
