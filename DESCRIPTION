@@ -1,0 +1,14 @@
+Package: purler
+Type: Package
+Title: Run-Length Encoding Tools
+Version: 0.1
+Author: mikefc
+Maintainer: mikefc <mikefc@coolbutuseless.com>
+Description: Run-length encoding tools where NA values are treated as identical, 
+    and results can be returned as a data.frame.
+License: MIT + file LICENSE
+LazyData: TRUE
+RoxygenNote: 7.1.1
+Encoding: UTF-8
+Suggests: 
+    testthat
