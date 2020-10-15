@@ -22,7 +22,47 @@ library(ggplot2)
 })
 ```
 
-# purler
+
+
+```{r echo = FALSE, eval = FALSE}
+# Quick logo generation. Borrowed heavily from Nick Tierney's Syn logo process
+library(magick)
+library(showtext)
+font_add_google("Cutive Mono", "gf")
+
+
+# pkgdown::build_site(override = list(destination = "../coolbutuseless.github.io/package/devoutpdf"))
+```
+
+
+```{r echo = FALSE, eval = FALSE}
+img <- image_read("man/figures/pearl2.png")
+
+
+hexSticker::sticker(subplot  = img,
+                    s_x      = 1,
+                    s_y      = 1.3,
+                    s_width  = 1.2,
+                    s_height = 1.2,
+                    package  = "purler",
+                    p_x      = 1,
+                    p_y      = 0.6,
+                    p_color  = "#223344",
+                    p_family = "gf",
+                    p_size   = 9,
+                    h_size   = 1.2,
+                    h_fill   = "#ffffff",
+                    h_color  = "#223344",
+                    filename = "man/figures/logo.png")
+
+image_read("man/figures/logo.png")
+```
+
+
+
+
+
+# purler <img src="man/figures/logo.png" align="right" height=230/>
 
 
 <!-- badges: start -->
@@ -34,6 +74,10 @@ library(ggplot2)
 
 
 `purler` contains tools for run-length encoding vector data.
+
+
+<img src="man/figures/example-annotated.png" style="border: 1px solid #000000;" />
+
 
 #### Key features:
 

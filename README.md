@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# purler
+# purler <img src="man/figures/logo.png" align="right" height=230/>
 
 <!-- badges: start -->
 
@@ -14,6 +14,8 @@ status](https://github.com/coolbutuseless/purler/workflows/R-CMD-check/badge.svg
 <!-- badges: end -->
 
 `purler` contains tools for run-length encoding vector data.
+
+<img src="man/figures/example-annotated.png" style="border: 1px solid #000000;" />
 
 #### Key features:
 
@@ -98,7 +100,7 @@ res <- bench::mark(
 plot(res) + theme_bw()
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 ## Run-length encoding with NAs
 
